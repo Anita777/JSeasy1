@@ -23,7 +23,8 @@ let array = [
   'не'
 ];
 
-let homeSentence = `${array[4]}, ${array[2]}, ${array[6]} ${array[8]} ${array[7]}. ${array[0]} ${array[3]} ${array[1]} ${array[5]}`;
+let homeSentence = `${array[4]}, ${array[2]}, ${array[6]} ${array[8]} ${array[7]}.
+ ${array[0]} ${array[3]} ${array[1]} ${array[5]}`;
 
 console.log(homeSentence); 
 
