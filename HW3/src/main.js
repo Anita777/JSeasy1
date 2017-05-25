@@ -1,4 +1,3 @@
-
 // Task 1
 
 let arr = [1, 2, 3];
@@ -14,10 +13,10 @@ console.log(addToArray(arr, 4));
 
 var userNames = [{ name: 'Egor' }, { name: 'Katya' }, { name: 'Vera' }];
 function simpleObjectGenerator (param1, param2, param3) {
-	return ({	argument1: param1,
-				argument2: param2,
-				argument3: param3});
+
+return ({argument1: param1, argument2: param2, argument3: param3});
 }
+
 console.log(simpleObjectGenerator('protocol', { url: '22' }, 8000));
 console.log(simpleObjectGenerator(77, userNames, 'privet kak dela chto novogo'.toUpperCase()));
 
@@ -68,4 +67,5 @@ function Func1(arg1, arg2, arg3, Func2) {
 	Func2(array);
 }
 
-Func1( 1, 2, 3, function(f) {console.log (f)}); 	
+Func1( 1, 2, 3, function(f) {console.log (f)}); 
+
