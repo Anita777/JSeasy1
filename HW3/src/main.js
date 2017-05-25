@@ -68,4 +68,3 @@ function Func1(arg1, arg2, arg3, Func2) {
 }
 
 Func1( 1, 2, 3, function(f) {console.log (f)}); 
-
