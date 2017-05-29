@@ -1,3 +1,4 @@
+
 // Task 1
 
 let numbers = [25, 1];
