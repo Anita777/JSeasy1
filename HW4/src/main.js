@@ -2,13 +2,16 @@
 // Task 1
 // 1. Напишите функцию которая принимает 2 числа 
 // и возвращает массив содержащий числа между первым числом и вторым числом;
- var i;
+
+
 function numbersBetween(a, b) {
-	let array = [];
-	for (i = a; i <= b; i++) {
-		array.push(i);
-	}
-	return array.slice(1, -1);
+    let arr = [];
+    if (a < b && a != b) {
+        for (let i = a + 1; i < b; i++) {
+            arr.push(i);
+        }
+        return arr ;
+    }
 }
 console.log(numbersBetween(1, 5)); // 2,3,4
 console.log(numbersBetween(3, 6)); // 4,5
@@ -24,46 +27,16 @@ function fizzBuzz(num) {
      		if(num % 3 == 0 && num % 5 == 0) {
          		console.log("FizzBuzz");
     	} else if (num % 3 == 0) {
-         	console.log("Fizz");
-     		} else {
-         	console.log("Buzz");
-    		}
+         		console.log("Fizz");
+     			} else {
+         			console.log("Buzz");
+    			}
  		} else { 
  			console.log(num);
      	}
     }
 }
 console.log(fizzBuzz(15));
-
-/*	var arrfb = ['FizzBuzz'];
-	var arrb = ['Buzz'];
-	var arrf = ['Fizz'];
-	var arrn = ['Num'];
-function fizzBuzz() {
-	for (var num = 1; num <= 100; num++) {
-		if (num%5 == 0 && num%3 == 0) {
-		  	arrfb.push(num);
-		} else {
-		  	if (num%5 == 0) {
-		  		arrb.push(num);
-		  	} else {
-		  		if (num%3 == 0) {
-		  			arrf.push(num);
-		  		} else {
-		  			if (num%5 != 0 && num%3 != 0) {
-		  				arrn.push(num);
-		  			}
-		  		}
-		  	}
-		}
-	}
-	console.log(arrfb);
-	console.log(arrb);
-	console.log(arrf);
-	console.log(arrn);
-}
-fizzBuzz();
-*/
 
 // Task 3
 
@@ -74,9 +47,9 @@ fizzBuzz();
 var arr1 = [1, null, undefined, 'str', {}, ['Hi'], function() {}];
 function TypeVariable (arr) {
 	let newArr = [];
-for (i = 0; i < arr1.length; i++) {
-	let type = toString.apply(arr1[i]);
-	newArr.push(type);
+	for (i = 0; i < arr1.length; i++) {
+		let type = toString.apply(arr1[i]);
+		newArr.push(type);
 	}
 	return newArr;
 }
