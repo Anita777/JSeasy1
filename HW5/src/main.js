@@ -15,14 +15,18 @@ let arr3 = [ 0, 1, null, 2, false, 1, 0];
 
 function moveZeroToEnd(arr) {
 	let arr0 = [];
+	let newArr = [];
 	for (let i = 0; i < arr.length; i++) {
 		if (arr[i] === 0) {
-			arr0.push(arr.splice(i, 1));
-			i = i - 1;
+			//arr0.push(arr.splice(i, 1));
+			//i = i - 1;
+			arr0.push(arr[i]);
+		} else {
+			newArr.push(arr[i]);
 		}
 	}
-	arr = arr.concat (...arr0);
-	return arr;
+	newArr = newArr.concat (arr0);
+	return newArr;
 }
 console.log(moveZeroToEnd(arr1));
 console.log(moveZeroToEnd(arr2));
@@ -83,6 +87,7 @@ capMe(['KARLY', 'DANIEL', 'KELSEY']); // returns ['Karly', 'Daniel', 'Kelsey']
 /* SUPER
 1. Найдите число отсутствующее в заданной последовательности
 */
+
 function random(arr) {
 	let number;
 	let	step = arr[1] - arr[0];
@@ -95,7 +100,7 @@ function random(arr) {
 		number = arr[0] - step;
 		}
 	} 
-	return console.log(number);
+	 console.log(number);
 }
 
 random([1, 3, 5, 9]); // 7
