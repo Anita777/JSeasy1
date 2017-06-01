@@ -343,11 +343,13 @@ let javaScript = {
 function countLetterA(value) {
   let arr = value.split('');			// строку преобразуем в массив
   let count = 0;
-  arr.forEach (function(elem) {			// перебираем массив
+  
+  arr.forEach ( function(elem) {			// перебираем массив
    		if (elem === 'a') {				// если элемент массива равен "а",
         count++;						// увеличиваем счетчик на 1
       } 
   });
+
   return count;
 }
 
@@ -364,9 +366,11 @@ console.log(countLetterA(user.name + javaScript.html)); // 3
  * */
 
 function reverseEachWord(str) {
-   let str1 = str.split(' ').map(function(elem, index, arr) {   // преобразовывает строку в массив слов
-         return elem.split('').reverse().join('');				// преобразовывает свово в массив букв, меняем порядок букв, соединяем опять буквы в слово
-  });console.log (str1.join(' '));								// соединяем слова в предложение
+  let str1 = str.split(' ').map(function(elem, index, arr) {   // преобразовывает строку в массив слов
+      return elem.split('').reverse().join('');				// преобразовывает свово в массив букв, меняем порядок букв, соединяем опять буквы в слово
+  });
+
+  console.log (str1.join(' '));								// соединяем слова в предложение
 }
 console.log(reverseEachWord('You don\'t have to do anything special to begin using the DOM. Different browsers have different implementations of the DOM'));
 // uoY t'nod evah ot od gnihtyna laiceps ot nigeb gnisu eht .MOD tnereffiD sresworb evah tnereffid snoitatnemelpmi fo eht MOD
@@ -380,12 +384,14 @@ console.log(reverseEachWord('The Document Object Model (DOM) is a programming in
  * переворачиваются в обратном порядке
  * */
 function reverseEachWord(str, bool) {
-    let str2;
-    (bool == true) ? (str2 = str.split('.').reverse()) :
-                     (str2 = str.split(' '));
-    let str1 = str2.map(function(elem, index, arr) { 
-         return elem.split('').reverse().join('');
+  let str2;
+
+  (bool == true) ? (str2 = str.split('.').reverse()) :
+                   (str2 = str.split(' '));
+  let str1 = str2.map(function(elem, index, arr) { 
+      return elem.split('').reverse().join('');
     });
+
   return ((bool == true) ? str1.join('.') : str1.join(' '));
 }
 
@@ -407,11 +413,15 @@ console.log(reverseEachWord('Hi my Name is', false));
 
 function wordCounter(sentence) {
 	let objWord = {};
+
 	sentence.split(' ').forEach(function(elem, index, arr) {	// перебираем массив
-		if (objWord[elem])										// если новый объект содержит свойство elem,
-			objWord[elem] = objWord[elem] + 1;					// то значение свойства увеличиваем на 1
-		else  objWord[elem] = 1;								// иначе объекту  присваеваем свойство elem со значением 1
-	});
+		if (objWord[elem]) {										// если новый объект содержит свойство elem,
+			objWord[elem] = objWord[elem] + 1;
+    } else {			// то значение свойства увеличиваем на 1
+		  objWord[elem] = 1;								// иначе объекту  присваеваем свойство elem со значением 1
+	  }
+  });
+
 	return objWord;
 }
 
@@ -427,11 +437,13 @@ console.log(wordCounter('url http url www url http'));
 */ 
  
 function createHashTags(arr) {
-    let newObj = {};
-    arr.forEach( function( elem, index, arr) {			//перебираем массив
-        newObj[arr[index]._id] = arr[index].company;	// новому объекту присваиваем свойство , равное значению св-ва _id объекта arr
-    });													// а значению этого св-ва - значение св-ва company объекта arr
-    return newObj;
+  let newObj = {};
+
+  arr.forEach( function( elem, index, arr) {			//перебираем массив
+    newObj[elem._id] = elem.company;	// новому объекту присваиваем свойство , равное значению св-ва _id объекта arr
+  });
+  													// а значению этого св-ва - значение св-ва company объекта arr
+  return newObj;
 }
 console.log(createHashTags(listOfCompanys));
 
@@ -445,11 +457,13 @@ console.log(createHashTags(listOfCompanys));
 
 function uniqueElements(arr) {
 	let arrUnicue = [];
+
 	arr.forEach( function( elem, index, arr) {
 		if (arrUnicue.indexOf(elem) === -1) { 	// если в массиве нет элемента elem,
 			arrUnicue.push(elem);				// то добавляем его
-		 	}
+		}
 	});
+
 	return arrUnicue;
 }
 
