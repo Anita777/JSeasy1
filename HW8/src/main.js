@@ -56,6 +56,7 @@ function validBraces(str) {
     if (stack.length == 0)
     	return console.log('true');
 }
+
 validBraces('(){}[]'); //=> returns true
 validBraces('(}'); //=> returns false
 validBraces('[(])'); // => returns false
@@ -77,9 +78,11 @@ function makeCallback(fn) {
 		setTimeout(function() {
 		console.log(i);
     	}, i * 1000);
+	  	var time =  (i + 1) * 1000;
   	}
-  	setTimeout(fn, 11*1000);
+  	setTimeout(function() { fn() }, time);
 }
+
 makeCallback(function() {
 	console.log('THE LAST LAST comment');
 });
@@ -98,28 +101,29 @@ makeCallback(function() {
  *
  * */
 
-let cache = {};
 function sum(num) {
-	let sum = 0;
-	let numb = num;
-	if (!cache[num])  {
-		while (0 <= numb ) {
-			sum = sum + numb;
-			numb--;
+let cache = {};	
+	return function(num){
+		if (!cache[num])  {
+			let summa = 0;	
+			for (let i = num; i > 0; i--) {
+				summa = summa + i;
+			}
+			cache[num]=summa;
+			console.log(summa);
+		} else {
+			console.log('from cache',cache[num]);
 		}
-		cache[num]=sum;
-		console.log(sum);
-	} else {
-		console.log('from cache',cache[num]);
 	}
 }
 
-sum(5); // 15 Значение кешировано
-sum(5); // 15 Значение взято из кэша
-sum(5); // 15 Значение взято из кэша
-sum(6); // 21 Кешировано
-sum(6); // 21 Значение взято из кэша
-sum(5); // 15 Значение взято из кэша
+let sum1 = sum();
+sum1(5); // 15 Значение кешировано
+sum1(5); // 15 Значение взято из кэша
+sum1(5); // 15 Значение взято из кэша
+sum1(6); // 21 Кешировано
+sum1(6); // 21 Значение взято из кэша
+sum1(5); // 15 Значение взято из кэша
 
 
 
