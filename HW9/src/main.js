@@ -13,7 +13,7 @@
  * */
 
 let developer1 = {
-  skills: ['JavaScript', 'linux', 'html', 'OOP', 'Node.js'], // умения
+  skills: ['JavaScript', 'linux', 'html', 'OOP', 'Node.js'],
   requires: ['Node.js', 'JavaScript', 'OOP'],
   goodDev: goodDev
 };
@@ -25,23 +25,15 @@ let developer2 = {
     { technology: 'aws' },
     { technology: 'docker' }
   ],
-   requires: ['java', 'json', 'c++', 'JavaScript'], // требования
+  requires: ['java', 'json', 'c++', 'JavaScript'],
   goodDev: goodDev
 };
 
 
 function goodDev(dev) {
   let skil;
-  if (this == developer1) {
-     skil = this.skills;
-  } else {
-    skil = [];
-    this.experience.forEach((elObj, ind) => {
-      for (let key in elObj) {
-        skil.push(elObj[key]);
-      }
-    });
-  }
+  (this.skills) ? skil = this.skills : 
+                  skil = this.experience.map(elem => elem.technology);
   this.requires.forEach ((elem, index) =>
     skil.includes (elem) ?  console.log(`required: ${elem} ... success`) :
                             console.log(`required: ${elem} ... fail`)); 
@@ -88,15 +80,12 @@ let myObject = {
 };
 
 function myFilter (key) {
-/*  let arr1, arr2;
-    if (key == 'age') {
-      arr1 = this.database.sort((a, b) => a.age - b.age);
-      return arr1;
-    } else {
-      arr2 = this.database.sort((a, b) => a.name > b.name ? 1 : -1);
-      return arr2;
-    }
-*/
+  if (key == 'age') {
+    this.database.sort((a, b) => a.age - b.age);
+  } else {
+    this.database.sort((a, b) => a.name > b.name ? 1 : -1);
+  }
+  return this.database;
 }
 // {age:15, name:'c'}, {age:25, name:'a'} {age:100, name:'b'}
 
