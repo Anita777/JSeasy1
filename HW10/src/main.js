@@ -52,7 +52,8 @@ console.log('-----------------');
 
 
 var ezjQuery = {
-addStr: addStr
+addStr: addStr,
+lastTag: ''
 };
 
 function addStr (str)  {
@@ -84,19 +85,22 @@ console.log('--------------------');
  */
 
 ezjQuery.add = function  (str, str1)  {
-  (str1===undefined) ? newStr =`<${str}></${str}>` :
-                       newStr =`<${str}>${str1}</${str}>`;
+  let newStr = `<${str}></${str}>`;
+  let LTag =  newStr.substring(newStr.indexOf('</'));
+  if (str1) {
+    newStr =`<${str}>${str1}</${str}>`;
+  }  
   if (this.tags === undefined) {
-    this.tags = newStr;
+    this.tags = newStr;   
   } else {
-    let mid = this.tags.indexOf('/')-1;
-    this.tags = this.tags.slice(0, mid) + newStr 
-              + this.tags.slice(mid);
+    this.tags = this.tags.substring(0, this.tags.indexOf(this.lastTag)) + newStr 
+              + this.tags.substring(this.tags.indexOf(this.lastTag));
   }
+  this.lastTag = LTag;
   return this;
 }
 
- ezjQuery.render = function() {
+ezjQuery.render = function() {
   let StrTags = ezjQuery.tags;
   ezjQuery.tags = '';
   return StrTags; 
@@ -119,6 +123,11 @@ var bodyDiv = ezjQuery
   .render();
 console.log(bodyDiv); //<body><div></div></body>
 document.write(helloList);
+var helloList1 = ezjQuery.add('body').add('div', '/') .add('pre', '/') .render();
+console.log(helloList1);
+var helloList2 = ezjQuery.add('div', '></ рыба').render();
+console.log(helloList2);
+console.log("------------------------");
 // Для выполнивших все задания
 // сделайте document.write(helloList) увидите результат :)
 
@@ -130,3 +139,25 @@ document.write(helloList);
  * $('body').add('li', 'hi').render() // <body><li>hi</li></body>
  *
  * */
+function $(body) {
+  this.tags = `<${body}></${body}>`;
+  this.add = function(str, str1) {
+  this.lastTag = `</${body}>`;
+  let newStr = `<${str}></${str}>`;
+  if (str1) {
+    newStr =`<${str}>${str1}</${str}>`;
+  }  
+  this.tags = this.tags.substring(0, this.tags.indexOf(this.lastTag)) + newStr 
+            + this.tags.substring(this.tags.indexOf(this.lastTag));
+  return this;
+  }
+  this.render = function() {
+    let StrTags = this.tags;
+    this.tags = '';
+    return StrTags;
+  }
+}
+let newObj = new $('body').add('li', '/').render();
+console.log (newObj);
+let newObj1 = new $('body').render(); 
+console.log (newObj1);// == '<body></body>'
