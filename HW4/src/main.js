@@ -5,13 +5,13 @@
 
 
 function numbersBetween(a, b) {
-    let arr = [];
-    if (a < b && a != b) {
-        for (let i = a + 1; i < b; i++) {
-            arr.push(i);
-        }
-        return arr ;
+  let arr = [];
+  if (a < b && a != b) {
+    for (let i = a + 1; i < b; i++) {
+       arr.push(i);
     }
+    return arr ;
+  }
 }
 console.log(numbersBetween(1, 5)); // 2,3,4
 console.log(numbersBetween(3, 6)); // 4,5
@@ -22,21 +22,28 @@ console.log(numbersBetween(10, 15)); // 11, 12, 13, 14
 // Перепешите задачу FizzBuzz, но с использованием цикла. 
 // Расчет чисел должен идти до 100 
 function fizzBuzz(num) {
-	for (num = 1; num < 100; num++) {
-        if(num % 3 == 0 || num % 5 == 0) {
-     		if(num % 3 == 0 && num % 5 == 0) {
-         		console.log("FizzBuzz");
-    	} else if (num % 3 == 0) {
-         		console.log("Fizz");
-     			} else {
-         			console.log("Buzz");
-    			}
- 		} else { 
- 			console.log(num);
-     	}
-    }
+  let str = '';
+  if (num % 3 === 0) {
+  	str = str + 'Fizz';
+  }
+  if (!(num % 5)) {
+	str = str + 'Buzz';
+  }
+  if (!str.length) {
+    return num;
+  } 
+  return str;
 }
-console.log(fizzBuzz(15));
+
+console.log(fizzBuzz(7));
+
+function fizzBuzzNum (num) {
+  for (let i = 0; i <= num; i++) {
+  	console.log(fizzBuzz(i));
+  }
+}
+
+fizzBuzzNum(100);
 
 // Task 3
 
@@ -73,23 +80,23 @@ console.log(array); // [ {age:NaN}, {age:3}, {age:NaN}, {age:5}, {age:NaN}, {age
 console.log(array.length); // 35
 
 function solution(arr) {
-	for (i = 0; i < arr.length; i++) {
-		if ( isNaN(arr[i].age)) {
-			arr[i].unknownAge = true;
-		}
+  for (i = 0; i < arr.length; i++) {
+	if ( isNaN(arr[i].age)) {
+	  arr[i].unknownAge = true;
 	}
-	return arr;
+  }
+  return arr;
 }
 console.log(solution(array));
 
 let newArr = [];
 function returnArr(argument) {
-	for (i = 0; i < argument.length; i++) {
-		if (argument[i].unknownAge) {
-			newArr.push(argument[i]);
-		}	
-	}
-	return newArr;
+  for (i = 0; i < argument.length; i++) {
+	if (argument[i].unknownAge) {
+	  newArr.push(argument[i]);
+	}	
+  }
+  return newArr;
 }
 console.log(returnArr(array), newArr.length);
 
