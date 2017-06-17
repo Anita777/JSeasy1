@@ -8,7 +8,7 @@ function numbersBetween(a, b) {
   let arr = [];
   if (a < b && a != b) {
     for (let i = a + 1; i < b; i++) {
-       arr.push(i);
+      arr.push(i);
     }
     return arr ;
   }
@@ -75,15 +75,16 @@ console.log (TypeVariable (arr1));
  */
 
 var array = Array.from({ length: 35 }).map((value, index) => 
-	(index % 2 ? { age: index + 2 } : { age: NaN }));
+  (index % 2 ? { age: index + 2 } : { age: NaN }));
+
 console.log(array); // [ {age:NaN}, {age:3}, {age:NaN}, {age:5}, {age:NaN}, {age:7} ....]
 console.log(array.length); // 35
 
 function solution(arr) {
   for (i = 0; i < arr.length; i++) {
-	if ( isNaN(arr[i].age)) {
-	  arr[i].unknownAge = true;
-	}
+	  if ( isNaN(arr[i].age)) {
+	    arr[i].unknownAge = true;
+	  }
   }
   return arr;
 }
@@ -92,9 +93,9 @@ console.log(solution(array));
 let newArr = [];
 function returnArr(argument) {
   for (i = 0; i < argument.length; i++) {
-	if (argument[i].unknownAge) {
-	  newArr.push(argument[i]);
-	}	
+	  if (argument[i].unknownAge) {
+	    newArr.push(argument[i]);
+	  }	
   }
   return newArr;
 }
