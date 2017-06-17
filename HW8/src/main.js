@@ -12,11 +12,11 @@
  * */
 
 function solution1() {
-	let tempArg = '';
-	return function (str) {
-		tempArg = `${tempArg} ${str}`;
-		console.log(tempArg);
-	};
+  let tempArg = '';
+  return function (str) {
+    tempArg = `${tempArg} ${str}`;
+    console.log(tempArg);
+  };
 }
 
 let stringBuffer = solution1();
@@ -35,26 +35,26 @@ console.log('-------------------------');
  * */
 
 function validBraces(str) {
-	let stack = [];
-	let obj = {
-		'[': ']',
-		'{': '}',
-		'(': ')',
-	};
-    for(let i = 0; i < str.length; i++) {
-      	let elem = str[i];
-      	if (obj[elem]) {
-        	stack.push(elem);
-      	} else {	
-	      	if(obj[stack[stack.length-1]] == elem) {
-	        	stack.pop();
-	      	} else {
-	      	return console.log('false');
-	      	}
-  		}
+  let stack = [];
+  let obj = {
+    '[': ']',
+    '{': '}',
+    '(': ')',
+  };
+  for(let i = 0; i < str.length; i++) {
+    let elem = str[i];
+    if (obj[elem]) {
+      stack.push(elem);
+    } else {	
+      if(obj[stack[stack.length-1]] == elem) {
+        stack.pop();
+      } else {
+        return console.log('false');
+      }
     }
-    if (stack.length == 0)
-    	return console.log('true');
+  }
+  if (stack.length == 0)
+    return console.log('true');
 }
 
 validBraces('(){}[]'); //=> returns true
@@ -74,17 +74,17 @@ console.log('-------------------------');
  * */
 
 function makeCallback(fn) {
-	for (let i = 1; i <= 10; i++) {
-		setTimeout(function() {
-		console.log(i);
-    	}, i * 1000);
-	  	var time =  (i + 1) * 1000;
-  	}
-  	setTimeout(function() { fn() }, time);
+  for (let i = 1; i <= 10; i++) {
+    setTimeout(function() {
+      console.log(i);
+    }, i * 1000);
+    var time =  (i + 1) * 1000;
+  }
+  setTimeout(function() { fn() }, time);
 }
 
 makeCallback(function() {
-	console.log('THE LAST LAST comment');
+  console.log('THE LAST LAST comment');
 });
 
 // @SUPER
@@ -102,19 +102,19 @@ makeCallback(function() {
  * */
 
 function sum(num) {
-let cache = {};	
-	return function(num){
-		if (!cache[num])  {
-			let summa = 0;	
-			for (let i = num; i > 0; i--) {
-				summa = summa + i;
-			}
-			cache[num]=summa;
-			console.log(summa);
-		} else {
-			console.log('from cache',cache[num]);
-		}
-	}
+  let cache = {};	
+  return function(num){
+    if (!cache[num])  {
+      let summa = 0;	
+      for (let i = num; i > 0; i--) {
+        summa = summa + i;
+      }
+      cache[num]=summa;
+      console.log(summa);
+    } else {
+      console.log('from cache',cache[num]);
+    }
+  }
 }
 
 let sum1 = sum();
