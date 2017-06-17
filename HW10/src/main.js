@@ -52,8 +52,23 @@ console.log('-----------------');
 
 
 var ezjQuery = {
-addStr: addStr,
-lastTag: ''
+  addStr: addStr,
+  lastTag: '',
+  tags: [],
+  add(tagName, content = '') {
+    this.tags.push({ tagName: tagName, content: content });
+    return this;
+  },
+  render() {
+    const ArrBegin = [];
+    const ArrEnd = [];
+    this.tags.forEach(tag => {
+      ArrBegin.push(`<${tag.tagName}>${tag.content}`);
+      ArrEnd.unshift(`</${tag.tagName}>`);
+    });
+    this.tags = [];
+    return ArrBegin.concat(ArrEnd).join('');
+  }
 };
 
 function addStr (str)  {
@@ -84,7 +99,10 @@ console.log('--------------------');
  *
  */
 
+/*
+//--------------VERSION 2--------------------
 ezjQuery.add = function  (str, str1)  {
+  //this.lastTag = '';
   let newStr = `<${str}></${str}>`;
   let LTag =  newStr.substring(newStr.indexOf('</'));
   if (str1) {
@@ -105,7 +123,8 @@ ezjQuery.render = function() {
   ezjQuery.tags = '';
   return StrTags; 
 }
-
+//-------------------------------------------
+*/
 // example
 var helloList = ezjQuery
   .add('body') // <body></body>
@@ -139,6 +158,27 @@ console.log("------------------------");
  * $('body').add('li', 'hi').render() // <body><li>hi</li></body>
  *
  * */
+function $(tagM, contentM = '') {
+  return {
+    tags: [{ tagName: tagM, content: contentM }],
+    add(tagName, content = '') {
+      this.tags.push({ tagName: tagName, content: content });
+      return this;
+    },
+    render() {
+      const ArrBegin = [];
+      const ArrEnd = [];
+      this.tags.forEach(tag => {
+        ArrBegin.push(`<${tag.tagName}>${tag.content}`);
+        ArrEnd.unshift(`</${tag.tagName}>`);
+      });
+      this.tags = [];
+      return ArrBegin.concat(ArrEnd).join('');
+    }
+  }
+}
+//--------------VERSION 2--------------------
+/*
 function $(body) {
   this.tags = `<${body}></${body}>`;
   this.add = function(str, str1) {
@@ -157,6 +197,8 @@ function $(body) {
     return StrTags;
   }
 }
+*/
+//-------------------------------------------
 let newObj = new $('body').add('li', '/').render();
 console.log (newObj);
 let newObj1 = new $('body').render(); 
