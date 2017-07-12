@@ -9,28 +9,13 @@
 
  ИСПОЛЬЗУЙТЕ МЕТОДЫ МАССИВОВ !
  */
-
-let solution = (arr) => {
-  let newArr = [];
-  if (arr.length === 3) {
-  	newArr.push([]);
-    newArr.push([]);
-  }
-  if (arr.length === 2) {
-  	newArr.push([]);
-    newArr.push([]);
-    newArr.push([]);
-  }
-  if (arr.length === 0) {
-   	 newArr.push([]);
-  }
-  arr.forEach((elem) => {
-    elem.forEach((el, ind) => {
-      (ind === 0 || ind % 2 === 0) ? newArr[ind].push(el) : newArr[1].push(el);
+  const solution = arr => {
+  return arr[0].map((_, index) => {
+    return arr.map(elem => {
+      return elem[i];
     });
   });
-  return newArr;
-}
+};
 
 console.log(solution([ [1, 3, 5],[2, 4, 6]])); //[ [1, 2],[3, 4],[5, 6] ]
 console.log(solution([ [1, 'a'],[2, 'b'],[3, 'c'] ])); // [[1, 2, 3],[a, b, c]]
