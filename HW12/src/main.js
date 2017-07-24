@@ -41,7 +41,7 @@ let ctx1 = {
     }
   }
 };
-
+/*
 function random (ctx, next) {
   let argCTX = ctx;
   let functionNext = next;
@@ -68,7 +68,36 @@ Http.prototype.listen = function (PORT, host) {
 const server = new Http().createServer(random(ctx1, function () { 
   console.log('hello, I\'m server') })).listen(30304, 'localhost');
 console.log(server);
+*/
+function Http() { }
+Http.prototype.createServer = function(fn) {
+  let ctx = {
+    req: {
+      port: 3000,
+      url: 'https://google.com'
+    },
+    res: {
+      status: 200,
+      message: 'ok',
+      header: {
+        'content-type': 'application/json'
+      }
+    }
+  }
+  this.fn = () => {
+    fn.call(this, ctx, () => { })
+  }
+  return this;
+}
 
+Http.prototype.listen = function(PORT, host) {
+  console.log(`Server running on https://${host}:${PORT}`)
+  this.fn();
+}
+
+const server = new Http().createServer(function(ctx, next) {
+  console.log(ctx);
+}).listen(3000, 'localhost');
 
 // TASK 1
 // Создать класс Human, у которого будут свойства обычного человека:
@@ -123,15 +152,11 @@ worker.work();
  * Каждый раз при вызове внутренней функции в консоле будут отображаться аргументы функции
  * которую мы обернули
 */
-function something (arg1, arg2) {
-  console.log (`${arg1} ${arg2}`);
-}
 function wrapper(fn) {
-  return function () {
-    return fn.apply(this, arguments);
+  return (...args) => {
+    console.log(args);
+    fn.apply(this, args)
   }
 }
-var someF = wrapper(something);
-someF ('Hello', 'Google !!!');
 
 
