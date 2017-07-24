@@ -40,6 +40,7 @@ class Keypad {
       Keypad: ['keypad.html', 'th', 'tab active'],
       'Add user': ['add-user.html', 'plus', 'tab']
     };
+    this.body = document.body;
   }
   createHeader() {
     return `<header class="header"><div class="container top-radius"><h2>Keypad</h2></div></header>`;
@@ -80,32 +81,53 @@ class Keypad {
     footer += `</div></footer>`;
     return footer; 
   }
-  enterNumber() {
-    const buttons = document.querySelectorAll('button');
-    var span = document.getElementsByClassName('numbers');
-    [...buttons].forEach(elem => {
-      elem.onclick = function() {
-        [...span].forEach(el => {  
-          if (el.textContent.length < 15) {
-            if (!el.textContent) {
-              el.textContent += '(' + `${elem.innerHTML}`;
-            } else if (el.textContent.length == 4) {
-              el.textContent += ')-' + `${elem.innerHTML}`;
-            } else if (el.textContent.length == 8 || el.textContent.length == 11) {
-              el.textContent += '-' + `${elem.innerHTML}`;
-            }
-            else {
-              el.textContent += `${elem.innerHTML}`;
-            }
-          }
-        });
-       }  
+  enterNumber(elem, num) {
+    if (elem.textContent.length < 15) {
+      if (!elem.textContent) {
+        elem.textContent += '(' + num;
+      } else if (elem.textContent.length == 4) {
+        elem.textContent += ')-' + num;
+      } else if (elem.textContent.length == 8 || elem.textContent.length == 11) {
+        elem.textContent += '-' + num;
+      }
+      else {
+        elem.textContent += num;
+      }
+    }
+  }
+  delNumber (numb) {
+    let length = numb.textContent.length - 1;
+    if (length >= 0) {
+      numb.textContent = numb.textContent.slice(0, length);
+    }
+  }
+  events() {
+
+    this.numbers = document.querySelector('.numbers');
+    this.deleteNumber = document.getElementById('deleteNumber');
+    this.buttons = document.querySelector('.keypad-holder');
+
+    this.deleteNumber.addEventListener('click', event => {
+      this.delNumber(this.numbers);
+    });
+    this.body.addEventListener('keydown', event => {
+      if (event.key == '*' || event.key == '#' || Number(event.key) >= 0 ) {
+        this.enterNumber(this.numbers, event.key);
+      }
+      if (event.key == 'Backspace') {
+        this.delNumber(this.numbers)
+      }
+    });
+    this.buttons.addEventListener('click', event => {
+      if (event.target.classList.contains('key')) {
+        this.enterNumber(this.numbers, event.target.textContent);
+      }
     });
   }
+
   render() {
-    const body = document.body;
     document.querySelector("body").innerHTML += this.createMain()  + this.createFooter();
-    this.enterNumber();
+    this.events();
   }
 }
 let keypad = new Keypad();
