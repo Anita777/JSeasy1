@@ -1,17 +1,18 @@
-﻿
+
 class App {
   constructor() {
     this.tableHeaders = ['Name', 'Last Name', 'Email'];
-    this.namePage = 'Contacts'; 
-    this.arrContact = [
-      ['Иван', 'Петров', 'IvanPetrov@i.ua'],
-      ['Сергей', 'Сергеев', 'SergeiSerg@i.ua'],
-      ['Иван', 'Иванов', 'IvanIvanov@i.ua'],
-      ['Александр', 'Александров', 'AlexAlex@i.ua'],
-      ['Алекс', 'Смирнов', 'AlexSmirno@i.ua'],
-      ['Сергей', 'Волков', 'VolkovSerg@i.ua'],
-      ['Мария', 'Шарик', 'MahaShar@i.ua'],
-      ['Витя', 'Пупкин', 'PupokYo@i.ua']
+    this.namePage = 'Contacts';
+    this.curContact;
+    this.contact = [
+      {name: 'Иван', lastname: 'Петров', email: 'IvanPetrov@i.ua'},
+      {name: 'Сергей', lastname: 'Сергеев', email: 'SergeiSerg@i.ua'},
+      {name: 'Иван', lastname: 'Иванов', email: 'IvanIvanov@i.ua'},
+      {name: 'Александр', lastname: 'Александров', email: 'AlexAlex@i.ua'},
+      {name: 'Алекс', lastname: 'Ушаков', email: 'AlexSmirno@i.ua'},
+      {name: 'Витя', lastname: 'Пупкин', email: 'PupokYo@i.ua'},
+      {name: 'Сергей', lastname: 'Шелков', email: 'VolkovSerg@i.ua'},
+      {name: 'Мария', lastname: 'Шарик', email: 'MahaShar@i.ua'}
     ];
     this.navigation = {
       Contacts: ['index.html', 'search', 'tab active'],
@@ -24,40 +25,42 @@ class App {
   createHeader() {
     return `<header class="header"><div class="container top-radius"><h2>Contacts</h2></div></header>`;
   }
-  createTableThead(arr) {
-    let emptyStr = '';
-    emptyStr += '<tr>';
-    arr.forEach((elem) => {
-      emptyStr += `<th>${elem}</th>`;
+  createTableBody(arg) {
+    var contacts;
+    if (arg) {
+      contacts = arg;
+    } else { 
+      contacts = this.contact; 
+    }
+    let tbody = '<tbody>'
+    contacts.forEach(elem => {  
+      tbody += `<tr><td>${elem.name}</td><td>${elem.lastname}</td><td class = "email">${elem.email}</td></tr>`;
     });
-    emptyStr += '</tr>';
-    return emptyStr;
+    return tbody += `</tbody>`;
   }
-  createTableBody(arr) {
-    let tbody = '<tbody>';
-    let tr = ''; 
-    this.arrContact.forEach(elem => {
-      tr += '<tr>'; 
-      elem.forEach(cont => {
-        tr += `<td>${cont}</td>`;
-      });
-       tr += '</tr>';
-    });
-    tbody = tbody + tr + `</tbody>`;
-    return tbody;
-  }
+
   createTable() {
-    let table = `<table class = "table table-hover contacts"><thead>`;
-    table += this.createTableThead(this.tableHeaders);
-    table += `</thead>`;
-    table += this.createTableBody(this.arrContact);
-    table += `</table>`;
-    return table;
+    let table = `<table class = "table table-hover contacts"><thead><tr>`;
+    let tableHeader = '<tr>';
+    this.tableHeaders.forEach(elem => {
+      tableHeader += `<th>${elem}</th>`;
+    });
+    tableHeader += '</tr>';
+    return table += tableHeader + this.createTableBody() + `</table>`;
   }
+
   createMain() {
-    let main = `<main class ="main app"><div class = "container"><form class="form-inline search-form"><div class="form-group"><label class="sr-only" for="search">Search</label><input type="text" class="form-control" id= "search" placeholder="Search"></div></form>`;
+   let main =
+      `<main class ="main app">
+      <div class = "container">
+        <form class="form-inline search-form">
+          <div class="form-group">
+            <label class="sr-only" for="search">Search</label>
+            <input type="text" class="form-control" id= "search" placeholder="Search">
+          </div>
+        </form>`;
     main += this.createTable();
-    return main += `</div></main>`;
+    return main += `</div></main>`
   }
   createNav(obj) {
     let nav = '<nav class="main-nav">';
@@ -71,35 +74,45 @@ class App {
     nav = nav + a + '</nav>';
     return nav; 
   }
-
   createFooter() {
     let footer = `<footer class="footer"><div class="container bottom-radius">`;
     footer += this.createNav(this.navigation) ;
     footer += `</div></footer>`;
     return footer; 
   }
-  sortGrid() {
-    var grid = document.querySelector('table');
-    var th = document.querySelectorAll("th");
-    var tbody = grid.getElementsByTagName('tbody')[0];
-    var rowsArray = [].slice.call(tbody.rows);         // Составить массив из TR
-    grid.onclick = function(e) {
-    if (e.target.tagName != 'TH') 
-      return;
-    rowsArray.sort(function(rowA, rowB) {             // Cортировать
-      return rowA.cells[e.target.cellIndex].innerHTML > rowB.cells[e.target.cellIndex].innerHTML ? 1 : -1;
+  filterUser (char){
+    let users = [];
+    this.contact.forEach(elem => {
+      if (elem.name.search(`${char}`) != -1  || elem.name.toLowerCase().search(`${char}`) != -1) {
+        users.push(elem);
+      }
+    })
+    return users;
+  }
+  sortUsers(key) {
+    return  this.contact.sort((a, b) => (a[key] > b[key] ? 1 : -1));
+  }
+  events() { 
+    this.tbody = document.querySelector('tbody');
+    this.search = document.getElementById('search');
+    this.grid = document.querySelector('table');
+
+    this.search.addEventListener('keyup', e => {
+      this.findUser = this.filterUser(this.search.value);
+      this.tbody.innerHTML = this.createTableBody(this.findUser);
     });
-    grid.removeChild(tbody);                          // Убрать tbody
-    for (var i = 0; i < rowsArray.length; i++) {      // добавить результат в нужном порядке в TBODY
-      tbody.appendChild(rowsArray[i]);                // они автоматически будут убраны со старых мест и вставлены в правильном порядке
-    }
-    grid.appendChild(tbody);
-    }
+
+    this.grid.addEventListener('click', e => {
+      if (e.target.tagName != 'TH') 
+        return;
+      this.curFilter = this.sortUsers(e.target.innerHTML.toLowerCase().replace(/\s/ig,''));
+      this.tbody.innerHTML = this.createTableBody();
+    });
   }
   render() {
     const body = document.body;
     document.querySelector("body").innerHTML = this.createHeader() + this.createMain() + this.createFooter();
-    this.sortGrid();
+    this.events();
   }
 }
 
